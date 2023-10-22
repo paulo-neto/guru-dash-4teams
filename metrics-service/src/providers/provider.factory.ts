@@ -23,7 +23,6 @@ export async function providerFactory(datasource: IDataSource) {
   }
 
   logger.info('Starting ' + datasource.name);
-  logger.info('Starting ' + datasource.meta);
   const metrics = await provider(datasource.meta);
   logger.info('Finishing ' + datasource.name);
 
