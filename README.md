@@ -14,7 +14,7 @@ Stack responsible for providing technical and operational metrics to be visualiz
 #### Componentes:
 - Grafana: Responsible for dashboards, the ./grafana folder has all the configuration of datasources and dashboards to upload via docker.
 - Influxdb: Timeseries database for metrics, is rising via docker with no mapped volume, so when the container dies the records are reset.
-- Strapi: CMS for configurations, today we have two collections, datasources and custom-metrics.
+- metrics-config: Service in Spring-Boot that manages the metrics settings to be collected
 - metrics-service: Service in nodeJS, responsible for reading the configurations of the strapi, and accessing the different datasources to obtain metrics, process them and insert in influxdb, in a recurring way according to the CRON configuration in the docker-compose.
 
 ## Requirements
@@ -58,10 +58,6 @@ Datasources are implementations of external providers, who must make the data av
 
 [SONAR DOCS](docs/sonar.md)
 
-#### Strapi (MANDATORY)
-
-[STRAPI DOCS](docs/strapi.md)
-
 ### New Custom Providers
 New providers can be implemented, for jenkins, GOCD, among other possibilities, for that it is necessary:
 
@@ -76,7 +72,6 @@ Then it is necessary to add it to the Record of provider.factory:
 const providers: Record<string, ProviderFunction> = {
   azure: getAzureMetrics,
   sonar: getSonarMetrics,
-  strapi: getStrapiMetrics,
   new_provider: getNewProviderMetrics(),
 };
 ```

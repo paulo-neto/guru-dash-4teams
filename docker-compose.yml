@@ -35,7 +35,7 @@ services:
     environment:
       - INFLUXDB=http://influxdb:8086/devops
       - METRICS_CONFIG=http://metrics-config:8080
-      - CRON=*/1 * * * *
+      - CRON=*/30 * * * *
     depends_on:
       - influxdb
       - metrics-config

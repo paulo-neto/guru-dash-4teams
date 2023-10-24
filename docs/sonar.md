@@ -33,3 +33,15 @@
 #### Provider name: sonar
 
 These are the minimum metrics required for the solution's standard dashboards to function. If you want to import more metrics, this is allowed. Just add to the metrics list. If you want fewer metrics than standards, this is also allowed, but standard dashboards will not have all of your data loaded.
+
+#### metrics-config
+
+Service that manages the metrics settings to be collected. Offers three end-points for managing metrics configurations:
+- POST /api/v1/metrics-config
+Creates a new metric configuration
+
+- PUT /api/v1/metrics-config/provider/{provider}
+Edit an existing metric
+
+- GET /api/v1/metrics-config
+Query existing metric settings
