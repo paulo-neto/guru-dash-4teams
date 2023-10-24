@@ -3,9 +3,11 @@ package com.ciandt.metrics_config.service;
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.ciandt.metrics_config.model.MetricConfig;
@@ -35,4 +37,16 @@ public class MetricsConfigService {
         }).collect(Collectors.toList());
         return retorno;
     }
+
+    public MetricConfigResponse editarMetrica(String provider, MetricConfigRequest request) throws NotFoundException {
+        MetricTypeEnum mt = MetricTypeEnum.getByValue(provider.toLowerCase());
+        MetricConfig m = repository.findByProvider(mt);
+        if (m == null) {
+            throw new NotFoundException();
+        }
+        m.setMeta(request.getMeta().toString());
+        repository.save(m);
+        return new MetricConfigResponse(m.getMeta(), m.getName(), m.getProvider().getValue());
+    }
+
 }
